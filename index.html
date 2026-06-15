@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="渣打 × 恩派 Futuremakers 内容档案" />
+    <title>Futuremakers 内容档案</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="/" data-link aria-label="Futuremakers 首页">
+        <span class="brand-mark">FM</span>
+        <span class="brand-copy"><strong>Futuremakers</strong><small>渣打 × 恩派</small></span>
+      </a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">菜单</button>
+      <nav id="site-nav" class="site-nav" aria-label="主导航">
+        <a href="/" data-link>首页</a>
+        <a href="/content" data-link>内容档案</a>
+        <a href="/review" data-link>年度回顾</a>
+        <a href="/about" data-link>关于项目</a>
+      </nav>
+      <a class="header-cta" href="/content" data-link>浏览档案</a>
+    </header>
+
+    <main id="app" tabindex="-1"></main>
+
+    <footer class="site-footer">
+      <div>
+        <p class="footer-brand">Futuremakers 内容档案</p>
+        <p>记录青年行动、社会创新与项目成长的真实轨迹。</p>
+      </div>
+      <div class="footer-links">
+        <a href="/content" data-link>内容档案</a>
+        <a href="/review" data-link>年度回顾</a>
+        <a href="/about" data-link>关于项目</a>
+      </div>
+      <p class="copyright">© <span id="copyright-year"></span> 渣打 × 恩派 Futuremakers</p>
+    </footer>
+
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>
