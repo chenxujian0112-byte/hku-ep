@@ -237,6 +237,7 @@ button { cursor: pointer; }
 .year-number { color: var(--green); font-size: 48px; font-weight: 700; letter-spacing: -.04em; }
 .year-card h3 { margin: 3px 0 14px; font-size: 28px; }
 .year-card p { margin: 0 0 22px; color: var(--muted); line-height: 1.8; }
+.year-tags { margin: 0 0 22px; }
 .about-grid { display: grid; grid-template-columns: .8fr 1.2fr; gap: 22px; padding: 12px 0 110px; }
 .about-card { padding: 38px; background: #fff; border-radius: 28px; }
 .about-card.green { color: #fff; background: var(--green); }

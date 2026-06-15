@@ -107,10 +107,7 @@ function contentPage() {
 
 const reviewPage = () => `<div class="page">
   ${pageHero('ANNUAL REVIEW', '年度回顾', '沿时间回看项目的成长', '以年度为线索，整理关键行动、阶段成果与值得再次阅读的项目故事。')}
-  <section class="review-grid">
-    <article class="year-card"><div class="year-number">2025</div><div><h3>连接行动与未来</h3><p>聚焦青年就业能力、社会创新实践与跨界伙伴协作，记录项目从发生到产生影响的完整过程。</p><a class="read-link" href="/content" data-link>查看本年度内容 →</a></div></article>
-    <article class="year-card"><div class="year-number">2024</div><div><h3>让青年力量被看见</h3><p>通过项目报道、人物故事和实践复盘，呈现参与者如何回应真实问题，并在行动中建立信心与能力。</p><a class="read-link" href="/content" data-link>查看本年度内容 →</a></div></article>
-  </section>
+  <section id="review-grid" class="review-grid"><div class="loading">正在整理年度档案…</div></section>
 </div>`;
 
 const aboutPage = () => `<div class="page">
@@ -168,6 +165,11 @@ async function initArchive() {
     fillOptions(controls.type, articles.map((item) => item.type));
     fillOptions(controls.project, articles.map((item) => item.project));
 
+    const requestedYear = new URLSearchParams(window.location.search).get('year');
+    if (requestedYear && [...controls.year.options].some((option) => option.value === requestedYear)) {
+      controls.year.value = requestedYear;
+    }
+
     const render = () => {
       const keyword = controls.search.value.trim().toLowerCase();
       const filtered = articles.filter((item) =>
@@ -188,6 +190,42 @@ async function initArchive() {
   }
 }
 
+async function initReview() {
+  const grid = document.querySelector('#review-grid');
+  if (!grid) return;
+  try {
+    const articles = await loadArticles();
+    const grouped = articles.reduce((years, article) => {
+      if (!years[article.year]) years[article.year] = [];
+      years[article.year].push(article);
+      return years;
+    }, {});
+    const descriptions = {
+      '2025': '社会企业助力计划持续升级，并通过女性力量、商业向善与银发赛道等特别企划拓展社会创新的更多可能。',
+      '2024': '聚焦女性社会创业家成长与社会企业案例传播，记录加速、路演和项目协作中的真实经验。',
+      '2023': '社会企业助力计划二期与「她山之力」项目逐步展开，从公开招募到主题沙龙连接更多创变者。',
+      '2022': '通过课程赋能、案例传播与社群交流，支持社会企业疫后恢复，并沉淀面向未来的实践方法。',
+      '2021': '社会企业疫后助力计划启动，以种子基金、训练营和系列沙龙陪伴社会企业应对挑战、恢复成长。',
+    };
+    grid.innerHTML = Object.keys(grouped).sort((a, b) => b.localeCompare(a)).map((year) => {
+      const items = grouped[year];
+      const projects = [...new Set(items.map((item) => item.project).filter(Boolean))];
+      const projectText = projects.slice(0, 3).join('、');
+      return `<article class="year-card">
+        <div class="year-number">${escapeHtml(year)}</div>
+        <div>
+          <h3>${items.length} 篇年度内容</h3>
+          <p>${escapeHtml(descriptions[year] || `本年度围绕${projectText || '青年发展与社会创新'}，记录项目行动、参与者故事与阶段成果。`)}</p>
+          ${projectText ? `<div class="tag-list year-tags">${projects.slice(0, 3).map((project) => `<span class="pill">${escapeHtml(project)}</span>`).join('')}</div>` : ''}
+          <a class="read-link" href="/content?year=${encodeURIComponent(year)}" data-link>查看 ${escapeHtml(year)} 年内容 →</a>
+        </div>
+      </article>`;
+    }).join('');
+  } catch (error) {
+    grid.innerHTML = `<div class="empty-state"><h3>暂时无法读取年度档案</h3><p>${escapeHtml(error.message)}</p></div>`;
+  }
+}
+
 const routes = { '/': homePage, '/content': contentPage, '/review': reviewPage, '/about': aboutPage };
 
 function renderRoute() {
@@ -198,6 +236,7 @@ function renderRoute() {
   nav.classList.remove('open'); menuToggle.setAttribute('aria-expanded', 'false');
   window.scrollTo({ top: 0, behavior: 'instant' });
   initArchive();
+  initReview();
 }
 
 document.addEventListener('click', (event) => {
@@ -205,7 +244,7 @@ document.addEventListener('click', (event) => {
   if (!link) return;
   const url = new URL(link.href, window.location.origin);
   if (url.origin !== window.location.origin) return;
-  event.preventDefault(); window.history.pushState({}, '', url.pathname); renderRoute();
+  event.preventDefault(); window.history.pushState({}, '', `${url.pathname}${url.search}`); renderRoute();
 });
 menuToggle.addEventListener('click', () => { const open = nav.classList.toggle('open'); menuToggle.setAttribute('aria-expanded', String(open)); });
 window.addEventListener('popstate', renderRoute);
