@@ -16,6 +16,8 @@ const aliases = {
   tags: ['标签', 'tags'],
   url: ['URL', 'url', '链接'],
   visible: ['展示状态', '是否展示', 'visible', 'status'],
+  image: ['图片', '图片路径', 'image', 'cover'],
+  imageMode: ['图片样式', 'imageMode'],
 };
 
 function pick(item, keys) {
@@ -39,6 +41,8 @@ function normalizeArticle(item, index) {
     tags: Array.isArray(rawTags) ? rawTags : String(rawTags || '').split(/[，,、]/).map((tag) => tag.trim()).filter(Boolean),
     url: String(pick(item, aliases.url)),
     visible: String(pick(item, aliases.visible) || '是').trim(),
+    image: String(pick(item, aliases.image)),
+    imageMode: String(pick(item, aliases.imageMode) || 'cover'),
   };
 }
 
@@ -129,18 +133,21 @@ function articleCard(article) {
     article.type && `<span><strong>内容类型：</strong>${escapeHtml(article.type)}</span>`,
     article.stage && `<span><strong>项目阶段：</strong>${escapeHtml(article.stage)}</span>`,
   ].filter(Boolean).join('');
-  return `<article class="article-card">
-    <div class="article-meta">
-      ${article.year ? `<span class="pill accent">${escapeHtml(article.year)}</span>` : ''}
-      ${article.date ? `<span class="pill">${escapeHtml(article.date)}</span>` : ''}
-      ${article.type ? `<span class="pill">${escapeHtml(article.type)}</span>` : ''}
-    </div>
-    <h3>${escapeHtml(article.title || '未命名文章')}</h3>
-    ${article.summary ? `<p class="article-summary">${escapeHtml(article.summary)}</p>` : ''}
-    ${detailItems ? `<div class="article-details">${detailItems}</div>` : ''}
-    <div class="article-bottom">
-      <div class="tag-list">${article.tags.map((tag) => `<span class="pill"># ${escapeHtml(tag)}</span>`).join('')}</div>
-      ${article.url ? `<a class="read-link" href="${escapeHtml(article.url)}" target="_blank" rel="noopener noreferrer">阅读原文 →</a>` : ''}
+  return `<article class="article-card${article.image ? ' has-image' : ''}">
+    ${article.image ? `<img class="article-image${article.imageMode === 'contain' ? ' contain' : ''}" src="${escapeHtml(article.image)}" alt="${escapeHtml(article.title)}配图" loading="lazy" />` : ''}
+    <div class="article-content">
+      <div class="article-meta">
+        ${article.year ? `<span class="pill accent">${escapeHtml(article.year)}</span>` : ''}
+        ${article.date ? `<span class="pill">${escapeHtml(article.date)}</span>` : ''}
+        ${article.type ? `<span class="pill">${escapeHtml(article.type)}</span>` : ''}
+      </div>
+      <h3>${escapeHtml(article.title || '未命名文章')}</h3>
+      ${article.summary ? `<p class="article-summary">${escapeHtml(article.summary)}</p>` : ''}
+      ${detailItems ? `<div class="article-details">${detailItems}</div>` : ''}
+      <div class="article-bottom">
+        <div class="tag-list">${article.tags.map((tag) => `<span class="pill"># ${escapeHtml(tag)}</span>`).join('')}</div>
+        ${article.url ? `<a class="read-link" href="${escapeHtml(article.url)}" target="_blank" rel="noopener noreferrer">阅读原文 →</a>` : ''}
+      </div>
     </div>
   </article>`;
 }
