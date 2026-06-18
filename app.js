@@ -4,6 +4,62 @@ const menuToggle = document.querySelector('.menu-toggle');
 
 document.querySelector('#copyright-year').textContent = new Date().getFullYear();
 
+const eventCategories = [
+  {
+    name: '社会企业助力计划（一期）',
+    period: '2021-2022',
+    match: (article) => ['社会企业疫后助力计划', '社会企业助力计划'].includes(article.project) && Number(article.year) <= 2022,
+    description: '从疫后纾困、种子基金到课程赋能与案例传播，支持社会企业恢复经营并提升长期发展能力。',
+  },
+  {
+    name: '社会企业助力计划（二期）',
+    period: '2022-2024',
+    match: (article) => article.project === '社会企业助力计划（二期）',
+    description: '围绕社企加速营、影响力投资、社区服务场景与种子基金支持，形成第二阶段项目陪伴。',
+  },
+  {
+    name: '她山之力女性社会创业家加速计划',
+    period: '2023-2024',
+    match: (article) => article.project === '「她山之力」女性社会创业家加速计划',
+    description: '聚焦女性社会创业家，记录项目招募、主题沙龙、线上路演、开营和线下路演等关键节点。',
+  },
+  {
+    name: '2025 社会企业助力计划（升级版）',
+    period: '2025-2026',
+    match: (article) => article.project === '2025 社会企业助力计划',
+    description: '从新一期启动、20强入围、决赛训练营到生态升级，呈现项目从资助支持走向长期社群建设。',
+  },
+  {
+    name: '「她力量」特别企划',
+    period: '2025',
+    match: (article) => article.project === '「她力量」特别企划',
+    description: '以女性创业者与项目受益青年为主角，呈现残障融合、代际陪伴和女性创业支持案例。',
+  },
+  {
+    name: '垂直赛道',
+    period: '2025-2026',
+    match: (article) => article.project.startsWith('垂直赛道'),
+    description: '围绕商业向善与银发赛道，探索社会价值进入企业主航道和银发产业创新机会。',
+  },
+  {
+    name: '其他社创活动（暂不纳入主分类）',
+    period: '待核查',
+    match: (article) => ['待分类', '其他社创活动（待核查）'].includes(article.project),
+    description: '保留暂未纳入主线项目的社创观察、对谈和资料内容，后续可继续归类。',
+  },
+];
+
+const grantees = [
+  { name: '致汇圆梦', focus: '无障碍环境建设、残障人士就业与社会融入', article: '为推动无障碍环境建设 她们坚守“助残圆梦”初心8年' },
+  { name: '田园公社', focus: '乡村食物系统、餐桌安全与社区支持农业', article: '从城市到乡村 为解决餐桌安全问题 她和团队一直在努力' },
+  { name: '雪山明珠', focus: '高半山区农产品销售、乡村振兴与社区发展', article: '投身扶贫工作多年的他 为高半山区农产品滞销问题找到了新出路' },
+  { name: '人人壮', focus: '大湾区老人用药提醒与银发健康服务', article: '好好吃药,大湾区青年这样提醒老人' },
+  { name: '学境教育', focus: '社区教育、终身学习与儿童成长支持', article: '从小朋友到大朋友,他致力于构建学无止境的社区' },
+  { name: '小岛生活 IsleLife', focus: '社区生活服务、女性社会创业与可持续社区', article: '小岛生活IsleLife' },
+  { name: '残艺文创', focus: '绘画疗愈、残障融合与文创产品', article: '她让视障人士拿起画笔，疗愈他们的世界' },
+  { name: '老友青年 / 鸣渊园', focus: '代际陪伴、社区活动与银发友好连接', article: '她用一个小实验，搭建起年轻人与老年人的温暖桥梁' },
+];
+
 const aliases = {
   year: ['年份', 'year'],
   date: ['标准日期', '日期', 'date'],
@@ -66,11 +122,12 @@ const homePage = () => `
   <div class="page">
     <section class="hero">
       <div>
-        <p class="eyebrow">Standard Chartered × NPI</p>
-        <h1>Futuremakers<span>内容档案</span></h1>
+        <p class="eyebrow">渣打银行 × 恩派慈善</p>
+        <h1>社会企业助力计划<span>内容档案</span></h1>
         <p class="hero-lead">汇集项目传播、青年故事与实践洞察，让每一次行动留下清晰、可检索的记录。</p>
         <div class="button-row">
           <a class="button primary" href="/content" data-link>进入内容档案</a>
+          <a class="button" href="/examples" data-link>企业伙伴</a>
           <a class="button" href="/about" data-link>了解项目</a>
         </div>
       </div>
@@ -81,7 +138,6 @@ const homePage = () => `
     </section>
     <section class="stats" aria-label="档案概览">
       <div class="stat"><strong>持续记录</strong><span>沉淀项目成长轨迹</span></div>
-      <div class="stat"><strong>多维检索</strong><span>按年份、类型与项目浏览</span></div>
       <div class="stat"><strong>开放连接</strong><span>回到每篇内容的原始现场</span></div>
     </section>
     <section class="feature-section">
@@ -101,7 +157,7 @@ const pageHero = (eyebrow, title, subtitle, description) => `
 
 function contentPage() {
   return `<div class="page">
-    ${pageHero('CONTENT ARCHIVE', '内容档案', '记录每一次行动的生长轨迹', '这里收录 Futuremakers 项目相关文章，可按年份、内容类型和项目名称筛选查看。')}
+    ${pageHero('CONTENT ARCHIVE', '内容档案', '记录每一次行动的生长轨迹', '这里收录社会企业助力计划相关文章，可按年份、内容类型和项目名称筛选查看。')}
     <section class="archive-shell">
       <div class="filters" aria-label="文章筛选">
         <label class="control"><span class="sr-only">搜索标题</span><input id="search" type="search" placeholder="搜索标题关键词" /></label>
@@ -116,15 +172,37 @@ function contentPage() {
 }
 
 const reviewPage = () => `<div class="page">
-  ${pageHero('ANNUAL REVIEW', '年度回顾', '沿时间回看项目的成长', '以年度为线索，整理关键行动、阶段成果与值得再次阅读的项目故事。')}
+  ${pageHero('PROJECT REVIEW', '年度回顾', '按项目事件回看成长路径', '以项目阶段和事件分类整理内容，并在每个分类下标注对应年度区间。')}
   <section id="review-grid" class="review-grid"><div class="loading">正在整理年度档案…</div></section>
 </div>`;
 
 const aboutPage = () => `<div class="page">
-  ${pageHero('ABOUT FUTUREMAKERS', '关于项目', '以教育、就业与创业支持青年成长', 'Futuremakers 是渣打集团推动青年经济融入的全球公益项目，恩派与合作伙伴共同支持项目在地实践。')}
+  ${pageHero('ABOUT PROJECT', '关于项目', '以能力建设、资金支持与社群陪伴支持社会企业成长', '社会企业助力计划由渣打银行与恩派慈善携手推进，关注社会企业的商业可持续能力、社会价值创造和长期生态建设。')}
   <section class="about-grid">
     <article class="about-card green"><p class="eyebrow">我们的关注</p><h3>让青年拥有创造未来的能力与机会</h3><p>围绕就业、创业与社会创新，连接资源、伙伴和真实实践场景。</p></article>
     <article class="about-card"><h3>为什么建立内容档案</h3><p>项目的价值不仅存在于结果中，也存在于每一次尝试、协作与经验分享中。这座档案希望让分散的内容重新形成脉络，让参与者、伙伴与公众更容易理解项目如何生长。</p><p>本网站收录公开发布内容，并通过标准化字段进行整理。点击文章卡片中的“阅读原文”，可前往对应发布平台查看完整内容。</p></article>
+  </section>
+</div>`;
+
+const examplesPage = () => `<div class="page">
+  ${pageHero('SUPPORTED CASES', '企业伙伴', '把被支持企业的故事单独看见', '这里集中呈现项目故事、案例传播和特别企划中的企业案例，方便快速了解资助企业的实践方向。')}
+  <section class="archive-shell">
+    <div class="archive-meta"><span id="examples-count">正在读取案例…</span></div>
+    <div id="examples-list" class="article-list"><div class="loading">正在整理企业伙伴…</div></div>
+  </section>
+</div>`;
+
+const granteesPage = () => `<div class="page">
+  ${pageHero('GRANTEE DIRECTORY', '获资助企业名录', '用于集中摆放企业 logo 与简介', '目前先以文字徽标和简介呈现，后续拿到正式 logo 后可替换为图片版名录。')}
+  <section class="grantee-grid">
+    ${grantees.map((item) => `<article class="grantee-card">
+      <div class="grantee-logo">${escapeHtml(item.name.slice(0, 2))}</div>
+      <div>
+        <h3>${escapeHtml(item.name)}</h3>
+        <p>${escapeHtml(item.focus)}</p>
+        <span>关联文章：${escapeHtml(item.article)}</span>
+      </div>
+    </article>`).join('')}
   </section>
 </div>`;
 
@@ -158,6 +236,14 @@ function articleCard(article) {
   </article>`;
 }
 
+function isExampleArticle(article) {
+  const text = `${article.title} ${article.project} ${article.type} ${article.stage} ${article.tags.join(' ')}`;
+  return article.type === '项目故事' ||
+    article.type === '特别企划' ||
+    article.stage === '案例传播' ||
+    /案例|故事|社企档案|她力量/.test(text);
+}
+
 async function initArchive() {
   const listEl = document.querySelector('#article-list');
   if (!listEl) return;
@@ -178,28 +264,52 @@ async function initArchive() {
     fillOptions(controls.type, articles.map((item) => item.type));
     fillOptions(controls.project, articles.map((item) => item.project));
 
-    const requestedYear = new URLSearchParams(window.location.search).get('year');
+    const params = new URLSearchParams(window.location.search);
+    const requestedYear = params.get('year');
+    const requestedProject = params.get('project');
+    const requestedType = params.get('type');
+    let activeCategory = eventCategories.find((category) => category.name === params.get('category')) || null;
     if (requestedYear && [...controls.year.options].some((option) => option.value === requestedYear)) {
       controls.year.value = requestedYear;
+    }
+    if (requestedProject && [...controls.project.options].some((option) => option.value === requestedProject)) {
+      controls.project.value = requestedProject;
+    }
+    if (requestedType && [...controls.type.options].some((option) => option.value === requestedType)) {
+      controls.type.value = requestedType;
     }
 
     const render = () => {
       const keyword = controls.search.value.trim().toLowerCase();
       const filtered = articles.filter((item) =>
         (!keyword || item.title.toLowerCase().includes(keyword)) &&
+        (!activeCategory || activeCategory.match(item)) &&
         (!controls.year.value || item.year === controls.year.value) &&
         (!controls.type.value || item.type === controls.type.value) &&
         (!controls.project.value || item.project === controls.project.value)
       );
-      document.querySelector('#result-count').textContent = `共 ${filtered.length} 篇内容`;
+      document.querySelector('#result-count').textContent = `${activeCategory ? `${activeCategory.name}：` : ''}共 ${filtered.length} 篇内容`;
       listEl.innerHTML = filtered.length ? filtered.map(articleCard).join('') : '<div class="empty-state"><h3>没有找到匹配内容</h3><p>试试清除部分筛选条件或更换关键词。</p></div>';
     };
     Object.values(controls).forEach((control) => control.addEventListener(control.tagName === 'INPUT' ? 'input' : 'change', render));
-    document.querySelector('#clear-filters').addEventListener('click', () => { Object.values(controls).forEach((control) => { control.value = ''; }); render(); });
+    document.querySelector('#clear-filters').addEventListener('click', () => { activeCategory = null; Object.values(controls).forEach((control) => { control.value = ''; }); render(); });
     render();
   } catch (error) {
     document.querySelector('#result-count').textContent = '档案读取失败';
     listEl.innerHTML = `<div class="empty-state"><h3>暂时无法读取内容</h3><p>${escapeHtml(error.message)}，请确认文件位于网站根目录。</p></div>`;
+  }
+}
+
+async function initExamples() {
+  const listEl = document.querySelector('#examples-list');
+  if (!listEl) return;
+  try {
+    const examples = (await loadArticles()).filter(isExampleArticle);
+    document.querySelector('#examples-count').textContent = `共 ${examples.length} 篇企业伙伴`;
+    listEl.innerHTML = examples.length ? examples.map(articleCard).join('') : '<div class="empty-state"><h3>暂无企业伙伴</h3><p>后续可继续补充项目故事、案例传播与特别企划文章。</p></div>';
+  } catch (error) {
+    document.querySelector('#examples-count').textContent = '案例读取失败';
+    listEl.innerHTML = `<div class="empty-state"><h3>暂时无法读取案例</h3><p>${escapeHtml(error.message)}</p></div>`;
   }
 }
 
@@ -208,29 +318,21 @@ async function initReview() {
   if (!grid) return;
   try {
     const articles = await loadArticles();
-    const grouped = articles.reduce((years, article) => {
-      if (!years[article.year]) years[article.year] = [];
-      years[article.year].push(article);
-      return years;
-    }, {});
-    const descriptions = {
-      '2025': '社会企业助力计划持续升级，并通过女性力量、商业向善与银发赛道等特别企划拓展社会创新的更多可能。',
-      '2024': '聚焦女性社会创业家成长与社会企业案例传播，记录加速、路演和项目协作中的真实经验。',
-      '2023': '社会企业助力计划二期与「她山之力」项目逐步展开，从公开招募到主题沙龙连接更多创变者。',
-      '2022': '通过课程赋能、案例传播与社群交流，支持社会企业疫后恢复，并沉淀面向未来的实践方法。',
-      '2021': '社会企业疫后助力计划启动，以种子基金、训练营和系列沙龙陪伴社会企业应对挑战、恢复成长。',
-    };
-    grid.innerHTML = Object.keys(grouped).sort((a, b) => b.localeCompare(a)).map((year) => {
-      const items = grouped[year];
-      const projects = [...new Set(items.map((item) => item.project).filter(Boolean))];
-      const projectText = projects.slice(0, 3).join('、');
+    grid.innerHTML = eventCategories.map((category) => {
+      const items = articles.filter(category.match);
+      const types = [...new Set(items.map((item) => item.type).filter(Boolean))];
+      const years = [...new Set(items.map((item) => item.year).filter(Boolean))].sort();
       return `<article class="year-card">
-        <div class="year-number">${escapeHtml(year)}</div>
+        <div class="year-number">${escapeHtml(category.period)}</div>
         <div>
-          <h3>${items.length} 篇年度内容</h3>
-          <p>${escapeHtml(descriptions[year] || `本年度围绕${projectText || '青年发展与社会创新'}，记录项目行动、参与者故事与阶段成果。`)}</p>
-          ${projectText ? `<div class="tag-list year-tags">${projects.slice(0, 3).map((project) => `<span class="pill">${escapeHtml(project)}</span>`).join('')}</div>` : ''}
-          <a class="read-link" href="/content?year=${encodeURIComponent(year)}" data-link>查看 ${escapeHtml(year)} 年内容 →</a>
+          <h3>${escapeHtml(category.name)}</h3>
+          <p>${escapeHtml(category.description)}</p>
+          <div class="tag-list year-tags">
+            <span class="pill accent">${items.length} 篇内容</span>
+            ${years.length ? `<span class="pill">年度：${escapeHtml(years.join(' / '))}</span>` : ''}
+            ${types.slice(0, 4).map((type) => `<span class="pill">${escapeHtml(type)}</span>`).join('')}
+          </div>
+          ${items.length ? `<a class="read-link" href="/content?category=${encodeURIComponent(category.name)}" data-link>查看相关内容 →</a>` : '<span class="muted-note">暂无匹配内容</span>'}
         </div>
       </article>`;
     }).join('');
@@ -239,7 +341,7 @@ async function initReview() {
   }
 }
 
-const routes = { '/': homePage, '/content': contentPage, '/review': reviewPage, '/about': aboutPage };
+const routes = { '/': homePage, '/content': contentPage, '/examples': examplesPage, '/review': reviewPage, '/grantees': granteesPage, '/about': aboutPage };
 
 function renderRoute() {
   const path = window.location.pathname.replace(/\/$/, '') || '/';
@@ -249,6 +351,7 @@ function renderRoute() {
   nav.classList.remove('open'); menuToggle.setAttribute('aria-expanded', 'false');
   window.scrollTo({ top: 0, behavior: 'instant' });
   initArchive();
+  initExamples();
   initReview();
 }
 
