@@ -51,9 +51,15 @@ async function loadArticles() {
   if (!response.ok) throw new Error('无法读取 articles.json');
   const data = await response.json();
   const list = Array.isArray(data) ? data : (data.articles || data.data || []);
+  const dateScore = (date) => /^\d{4}-\d{2}-\d{2}$/.test(date) ? Date.parse(date) : 0;
   return list.map(normalizeArticle)
     .filter((article) => ['是', 'yes', 'true', '1'].includes(article.visible.toLowerCase()))
-    .sort((a, b) => b.date.localeCompare(a.date));
+    .sort((a, b) =>
+      (Number(b.year) || 0) - (Number(a.year) || 0) ||
+      dateScore(b.date) - dateScore(a.date) ||
+      b.date.localeCompare(a.date, 'zh-CN') ||
+      a.title.localeCompare(b.title, 'zh-CN')
+    );
 }
 
 const homePage = () => `
