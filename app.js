@@ -122,12 +122,12 @@ const homePage = () => `
   <div class="page">
     <section class="hero">
       <div>
-        <p class="eyebrow">渣打银行 × 恩派慈善</p>
-        <h1>社会企业助力计划<span>内容档案</span></h1>
+        <p class="eyebrow">渣打银行 x 恩派公益</p>
+        <h1>社会企业助力计划<span>项目档案</span></h1>
         <p class="hero-lead">汇集项目传播、青年故事与实践洞察，让每一次行动留下清晰、可检索的记录。</p>
         <div class="button-row">
-          <a class="button primary" href="/content" data-link>进入内容档案</a>
-          <a class="button" href="/examples" data-link>企业伙伴</a>
+          <a class="button primary" href="/content" data-link>进入项目档案</a>
+          <a class="button" href="/examples" data-link>创业家故事</a>
           <a class="button" href="/about" data-link>了解项目</a>
         </div>
       </div>
@@ -157,7 +157,7 @@ const pageHero = (eyebrow, title, subtitle, description) => `
 
 function contentPage() {
   return `<div class="page">
-    ${pageHero('CONTENT ARCHIVE', '内容档案', '记录每一次行动的生长轨迹', '这里收录社会企业助力计划相关文章，可按年份、内容类型和项目名称筛选查看。')}
+    ${pageHero('CONTENT ARCHIVE', '项目档案', '记录每一次行动的生长轨迹', '这里收录社会企业助力计划相关文章，可按年份、内容类型和项目名称筛选查看。')}
     <section class="archive-shell">
       <div class="filters" aria-label="文章筛选">
         <label class="control"><span class="sr-only">搜索标题</span><input id="search" type="search" placeholder="搜索标题关键词" /></label>
@@ -172,28 +172,28 @@ function contentPage() {
 }
 
 const reviewPage = () => `<div class="page">
-  ${pageHero('PROJECT REVIEW', '年度回顾', '按项目事件回看成长路径', '以项目阶段和事件分类整理内容，并在每个分类下标注对应年度区间。')}
+  ${pageHero('PROJECT REVIEW', '项目回顾', '按项目事件回看成长路径', '以项目阶段和事件分类整理内容，并在每个分类下标注对应年度区间。')}
   <section id="review-grid" class="review-grid"><div class="loading">正在整理年度档案…</div></section>
 </div>`;
 
 const aboutPage = () => `<div class="page">
-  ${pageHero('ABOUT PROJECT', '关于项目', '以能力建设、资金支持与社群陪伴支持社会企业成长', '社会企业助力计划由渣打银行与恩派慈善携手推进，关注社会企业的商业可持续能力、社会价值创造和长期生态建设。')}
+  ${pageHero('ABOUT PROJECT', '关于项目', '以能力建设、资金支持与社群陪伴支持社会企业成长', '社会企业助力计划由渣打银行与恩派公益携手推进，关注社会企业的商业可持续能力、社会价值创造和长期生态建设。')}
   <section class="about-grid">
     <article class="about-card green"><p class="eyebrow">我们的关注</p><h3>让青年拥有创造未来的能力与机会</h3><p>围绕就业、创业与社会创新，连接资源、伙伴和真实实践场景。</p></article>
-    <article class="about-card"><h3>为什么建立内容档案</h3><p>项目的价值不仅存在于结果中，也存在于每一次尝试、协作与经验分享中。这座档案希望让分散的内容重新形成脉络，让参与者、伙伴与公众更容易理解项目如何生长。</p><p>本网站收录公开发布内容，并通过标准化字段进行整理。点击文章卡片中的“阅读原文”，可前往对应发布平台查看完整内容。</p></article>
+    <article class="about-card"><h3>为什么建立项目档案</h3><p>项目的价值不仅存在于结果中，也存在于每一次尝试、协作与经验分享中。这座档案希望让分散的内容重新形成脉络，让参与者、伙伴与公众更容易理解项目如何生长。</p><p>本网站收录公开发布内容，并通过标准化字段进行整理。点击文章卡片中的“阅读原文”，可前往对应发布平台查看完整内容。</p></article>
   </section>
 </div>`;
 
 const examplesPage = () => `<div class="page">
-  ${pageHero('SUPPORTED CASES', '企业伙伴', '把被支持企业的故事单独看见', '这里集中呈现项目故事、案例传播和特别企划中的企业案例，方便快速了解资助企业的实践方向。')}
+  ${pageHero('SUPPORTED CASES', '创业家故事', '把被支持企业的故事单独看见', '这里集中呈现项目故事、案例传播和特别企划中的企业案例，方便快速了解资助企业的实践方向。')}
   <section class="archive-shell">
     <div class="archive-meta"><span id="examples-count">正在读取案例…</span></div>
-    <div id="examples-list" class="article-list"><div class="loading">正在整理企业伙伴…</div></div>
+    <div id="examples-list" class="article-list"><div class="loading">正在整理创业家故事…</div></div>
   </section>
 </div>`;
 
 const granteesPage = () => `<div class="page">
-  ${pageHero('GRANTEE DIRECTORY', '获资助企业名录', '用于集中摆放企业 logo 与简介', '目前先以文字徽标和简介呈现，后续拿到正式 logo 后可替换为图片版名录。')}
+  ${pageHero('GRANTEE DIRECTORY', '获项目支持的社企名录', '以下名录收录曾参加线下训练营的社会企业', '目前先以文字徽标和简介呈现，后续拿到正式 logo 后可替换为图片版名录。')}
   <section class="grantee-grid">
     ${grantees.map((item) => `<article class="grantee-card">
       <div class="grantee-logo">${escapeHtml(item.name.slice(0, 2))}</div>
@@ -221,7 +221,6 @@ function articleCard(article) {
     ${article.image ? `<img class="article-image${article.imageMode === 'contain' ? ' contain' : ''}" src="${escapeHtml(article.image)}" alt="${escapeHtml(article.title)}配图" loading="lazy" />` : ''}
     <div class="article-content">
       <div class="article-meta">
-        ${article.year ? `<span class="pill accent">${escapeHtml(article.year)}</span>` : ''}
         ${article.date ? `<span class="pill">${escapeHtml(article.date)}</span>` : ''}
         ${article.type ? `<span class="pill">${escapeHtml(article.type)}</span>` : ''}
       </div>
@@ -305,8 +304,8 @@ async function initExamples() {
   if (!listEl) return;
   try {
     const examples = (await loadArticles()).filter(isExampleArticle);
-    document.querySelector('#examples-count').textContent = `共 ${examples.length} 篇企业伙伴`;
-    listEl.innerHTML = examples.length ? examples.map(articleCard).join('') : '<div class="empty-state"><h3>暂无企业伙伴</h3><p>后续可继续补充项目故事、案例传播与特别企划文章。</p></div>';
+    document.querySelector('#examples-count').textContent = `共 ${examples.length} 篇创业家故事`;
+    listEl.innerHTML = examples.length ? examples.map(articleCard).join('') : '<div class="empty-state"><h3>暂无创业家故事</h3><p>后续可继续补充项目故事、案例传播与特别企划文章。</p></div>';
   } catch (error) {
     document.querySelector('#examples-count').textContent = '案例读取失败';
     listEl.innerHTML = `<div class="empty-state"><h3>暂时无法读取案例</h3><p>${escapeHtml(error.message)}</p></div>`;
