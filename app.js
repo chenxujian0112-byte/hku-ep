@@ -60,6 +60,76 @@ const grantees = [
   { name: '老友青年 / 鸣渊园', focus: '代际陪伴、社区活动与银发友好连接', article: '她用一个小实验，搭建起年轻人与老年人的温暖桥梁' },
 ];
 
+const journeyItems = [
+  {
+    phase: '一期',
+    period: '2021',
+    title: '应急响应',
+    theme: '疫情困境下的社会企业支持',
+    data: '疫后纾困 · 种子基金 · 能力建设',
+    text: '从疫情影响下的经营恢复出发，帮助社会企业获得资金、课程和传播支持，稳住组织基本盘。',
+  },
+  {
+    phase: '二期',
+    period: '2022-2023',
+    title: '社区民生',
+    theme: '社区及民生相关机构成长',
+    data: '社区场景 · 民生议题 · 社企加速',
+    text: '围绕社区服务、民生需求和影响力投资，推动社会企业在真实场景里验证服务与商业模式。',
+  },
+  {
+    phase: '三期',
+    period: '2023-2024',
+    title: '她山之力',
+    theme: '女性社会创业家加速',
+    data: '女性社创 · 路演训练 · 议题表达',
+    text: '专门支持女性社会创业者，把商业可持续、议题表达和组织成长放在同一张发展图谱里。',
+  },
+  {
+    phase: '四期',
+    period: '2025-2026',
+    title: '可持续发展',
+    theme: '1-10阶段社企的系统赋能',
+    data: '205申请 · 97赋能 · 16资助 · 152家数据库',
+    text: '在更宽的议题赛道中筛选和陪伴社会企业，形成从训练营、决赛到长期社群的支持闭环。',
+  },
+  {
+    phase: '新一期',
+    period: '2027规划中',
+    title: 'AI + 社创',
+    theme: 'AI赛道、OPC与全周期陪伴',
+    data: '规划方向展示',
+    text: '预留下一阶段项目方向，未来可扩展在线申请、AI诊断和创业者主页等互动能力。',
+  },
+];
+
+const dashboardStats = [
+  { value: '5年', label: '项目沉淀周期' },
+  { value: '4期', label: '项目迭代' },
+  { value: '130+', label: '入选赋能社企' },
+  { value: '40+', label: '获种子基金机构' },
+  { value: '800+', label: '累计培训覆盖' },
+  { value: '42城', label: '覆盖城市' },
+];
+
+const issueDistribution = [
+  ['残障康复/融合', '19.7%'],
+  ['教育公平/创新', '11.2%'],
+  ['社区营造', '9.9%'],
+  ['老年服务/照顾', '9.9%'],
+  ['动保环保', '8.6%'],
+  ['文化艺术', '7.2%'],
+  ['性别平等/女性发展', '6.6%'],
+  ['心理健康', '5.9%'],
+];
+
+const methodSteps = [
+  '广泛筛选',
+  '深度赋能',
+  '决赛评选',
+  '长期陪伴',
+];
+
 async function loadGrantees() {
   const response = await fetch('/grantees.json', { cache: 'no-store' });
   if (!response.ok) throw new Error('无法读取 grantees.json');
@@ -124,32 +194,104 @@ async function loadArticles() {
 
 const homePage = () => `
   <div class="page">
-    <section class="hero">
+    <section class="hero project-hero">
       <div>
         <p class="eyebrow">渣打银行 x 恩派公益</p>
-        <h1>社会企业助力计划<span>项目档案</span></h1>
-        <p class="hero-lead">汇集项目传播、青年故事与实践洞察，让每一次行动留下清晰、可检索的记录。</p>
+        <h1>用五年时间<span>陪伴社会企业走稳更远</span></h1>
+        <p class="hero-lead">社会企业助力计划陪伴 130+ 社会企业，从“项目能做”走向“组织能稳”，用数据沉淀成果，也用故事呈现改变如何发生。</p>
         <div class="button-row">
-          <a class="button primary" href="/content" data-link>进入项目档案</a>
-          <a class="button" href="/examples" data-link>创业家故事</a>
-          <a class="button" href="/about" data-link>了解项目</a>
+          <a class="button primary" href="/#dashboard" data-link>了解项目成果</a>
+          <a class="button" href="/examples" data-link>查看创业者故事</a>
+          <a class="button" href="/content" data-link>进入项目档案</a>
         </div>
       </div>
       <div class="hero-visual" aria-hidden="true">
         <span class="orb orb-one"></span><span class="orb orb-two"></span><span class="orb orb-three"></span>
-        <div class="visual-note"><strong>让改变<br>被看见</strong><span>青年、就业、创新与社区行动的长期记录。</span></div>
+        <div class="visual-note"><strong>5年 · 4期<br>130+社企</strong><span>训练营、路演、种子基金与长期社群共同构成项目支持网络。</span></div>
       </div>
     </section>
-    <section class="stats" aria-label="档案概览">
-      <div class="stat"><strong>持续记录</strong><span>沉淀项目成长轨迹</span></div>
-      <div class="stat"><strong>开放连接</strong><span>回到每篇内容的原始现场</span></div>
+    <section class="stats impact-strip" aria-label="项目核心数字">
+      ${dashboardStats.slice(0, 5).map((item) => `<div class="stat"><strong>${item.value}</strong><span>${item.label}</span></div>`).join('')}
     </section>
-    <section class="feature-section">
-      <div class="section-heading"><h2>一份持续生长的档案</h2><p>这里不只保存发布过的文章，也保留项目如何回应议题、连接青年并形成影响力的过程。</p></div>
-      <div class="feature-cards">
-        <article class="feature-card"><span class="feature-number">01 / 记录</span><h3>项目进程</h3><p>从招募、培育到成果发布，按时间看见项目每一步。</p></article>
-        <article class="feature-card"><span class="feature-number">02 / 看见</span><h3>青年故事</h3><p>关注参与者真实经历，以及改变如何在个人和社区中发生。</p></article>
-        <article class="feature-card"><span class="feature-number">03 / 分享</span><h3>实践洞察</h3><p>整理项目经验、行业观察与可供同行参考的方法。</p></article>
+    <section id="journey" class="feature-section home-block">
+      <div class="section-heading"><h2>五年历程</h2><p>从疫后支持、社区民生、女性社创到 2025-2026 升级版，项目在不同阶段回应不同社会议题。</p></div>
+      <div class="timeline">
+        ${journeyItems.map((item) => `<article class="timeline-card">
+          <div class="timeline-node">${item.phase}</div>
+          <span class="pill accent">${item.period}</span>
+          <h3>${item.title}</h3>
+          <p class="timeline-theme">${item.theme}</p>
+          <p>${item.text}</p>
+          <strong>${item.data}</strong>
+        </article>`).join('')}
+      </div>
+    </section>
+    <section id="dashboard" class="dashboard-section home-block">
+      <div class="section-heading"><h2>数据看板</h2><p>先用可以公开展示的总量和结构数据搭建 1.0 版本，后续可接入更完整的全息数据库、地图和图表。</p></div>
+      <div class="dashboard-grid">
+        ${dashboardStats.map((item) => `<article class="dashboard-card"><strong>${item.value}</strong><span>${item.label}</span></article>`).join('')}
+      </div>
+      <div class="insight-grid">
+        <article class="insight-card">
+          <h3>议题分布</h3>
+          ${issueDistribution.map(([name, value]) => `<div class="bar-row"><span>${name}</span><div><i style="width:${value}"></i></div><b>${value}</b></div>`).join('')}
+        </article>
+        <article class="insight-card">
+          <h3>发展阶段</h3>
+          <div class="stage-grid">
+            <div><strong>44.7%</strong><span>0-1 验证期</span></div>
+            <div><strong>50%</strong><span>1-10 建立期</span></div>
+            <div><strong>3.9%</strong><span>重构期</span></div>
+            <div><strong>1.3%</strong><span>10-100 阶段</span></div>
+          </div>
+          <p>这一块后续可以继续升级为四象限图、城市热力图和就业带动数据。</p>
+        </article>
+      </div>
+    </section>
+    <section id="stories" class="feature-section home-block">
+      <div class="section-heading"><h2>创业者故事</h2><p>让数字有具体的人和组织。这里先放精选入口，完整案例可进入“创业者故事”和“获项目支持的社企名录”查看。</p></div>
+      <div class="story-grid">
+        ${grantees.slice(0, 6).map((item) => `<article class="story-card">
+          <div class="story-avatar">${item.name.slice(0, 2)}</div>
+          <h3>${item.name}</h3>
+          <p>${item.focus}</p>
+          <span>相关故事：${item.article}</span>
+        </article>`).join('')}
+      </div>
+      <div class="section-actions">
+        <a class="button primary" href="/examples" data-link>查看全部创业者故事</a>
+        <a class="button" href="/grantees" data-link>查看社企名录</a>
+      </div>
+    </section>
+    <section id="method" class="method-section home-block">
+      <div class="section-heading"><h2>方法论沉淀</h2><p>项目不只是“给钱”，也通过课程、辅导、路演和长期跟踪沉淀可复用的社会企业成长方法。</p></div>
+      <div class="method-grid">
+        <article class="method-card main-method">
+          <p class="eyebrow">双核七步法</p>
+          <h3>社会核 × 商业核</h3>
+          <p>围绕社会价值与商业模式的咬合度，帮助社会企业看清服务对象、收入结构、组织能力与增长路径。</p>
+        </article>
+        <article class="method-card">
+          <h3>项目机制</h3>
+          <div class="method-steps">${methodSteps.map((step) => `<span>${step}</span>`).join('')}</div>
+        </article>
+        <article class="method-card">
+          <h3>AI战略诊断</h3>
+          <p>未来可接入全息数据库，展示五维评估、涌现洞察和脱敏后的诊断示例。</p>
+        </article>
+        <article class="method-card">
+          <h3>洞察报告</h3>
+          <p>预留《2025-2026实践与洞察报告》摘要和下载位置，用于展示共性挑战和资助方启示。</p>
+        </article>
+      </div>
+    </section>
+    <section id="ecosystem" class="ecosystem-section home-block">
+      <div class="section-heading"><h2>渣友圈生态</h2><p>项目结束后，创业者仍可通过社群、私董会、导师网络和伙伴资源继续连接。</p></div>
+      <div class="ecosystem-grid">
+        <article><span>01</span><h3>校友社群</h3><p>沉淀历期创业者网络，支持持续交流、互助和资源共享。</p></article>
+        <article><span>02</span><h3>私董会机制</h3><p>以小组陪伴方式帮助创业者讨论真实经营问题，形成行动项。</p></article>
+        <article><span>03</span><h3>资源网络</h3><p>连接企业志愿者、外部专家、合作伙伴与影响力投资资源。</p></article>
+        <article><span>04</span><h3>品牌传播</h3><p>通过推文、媒体报道、理想者大会等渠道扩大优秀实践可见度。</p></article>
       </div>
     </section>
   </div>`;
@@ -388,9 +530,19 @@ function renderRoute() {
   const path = window.location.pathname.replace(/\/$/, '') || '/';
   const renderer = routes[path] || homePage;
   app.innerHTML = renderer();
-  document.querySelectorAll('.site-nav a').forEach((link) => link.classList.toggle('active', link.getAttribute('href') === path));
+  const currentHash = window.location.hash;
+  document.querySelectorAll('.site-nav a').forEach((link) => {
+    const href = link.getAttribute('href');
+    const isHomeRoot = path === '/' && href === '/' && !currentHash;
+    const isHomeSection = path === '/' && href === `/${currentHash}` && Boolean(currentHash);
+    link.classList.toggle('active', href === path || isHomeRoot || isHomeSection);
+  });
   nav.classList.remove('open'); menuToggle.setAttribute('aria-expanded', 'false');
-  window.scrollTo({ top: 0, behavior: 'instant' });
+  if (window.location.hash) {
+    setTimeout(() => document.querySelector(window.location.hash)?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 0);
+  } else {
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }
   initArchive();
   initExamples();
   initGrantees();
@@ -402,7 +554,7 @@ document.addEventListener('click', (event) => {
   if (!link) return;
   const url = new URL(link.href, window.location.origin);
   if (url.origin !== window.location.origin) return;
-  event.preventDefault(); window.history.pushState({}, '', `${url.pathname}${url.search}`); renderRoute();
+  event.preventDefault(); window.history.pushState({}, '', `${url.pathname}${url.search}${url.hash}`); renderRoute();
 });
 menuToggle.addEventListener('click', () => { const open = nav.classList.toggle('open'); menuToggle.setAttribute('aria-expanded', String(open)); });
 window.addEventListener('popstate', renderRoute);
