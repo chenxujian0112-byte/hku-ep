@@ -60,10 +60,15 @@ const grantees = [
   { name: '老友青年 / 鸣渊园', focus: '代际陪伴、社区活动与银发友好连接', article: '她用一个小实验，搭建起年轻人与老年人的温暖桥梁' },
 ];
 
+async function loadGrantees() {
+  const response = await fetch('/grantees.json', { cache: 'no-store' });
+  if (!response.ok) throw new Error('无法读取 grantees.json');
+  return response.json();
+}
+
 const aliases = {
   year: ['年份', 'year'],
   date: ['标准日期', '日期', 'date'],
-  source: ['来源公众号', '来源', 'source'],
   project: ['项目名称', '项目', 'project'],
   type: ['内容类型', '类型', 'contentType', 'type'],
   stage: ['项目阶段', '阶段', 'stage'],
@@ -88,7 +93,6 @@ function normalizeArticle(item, index) {
     id: item.id || `${date}-${index}`,
     year: String(pick(item, aliases.year) || date.slice(0, 4)),
     date,
-    source: String(pick(item, aliases.source)),
     project: String(pick(item, aliases.project)),
     type: String(pick(item, aliases.type)),
     stage: String(pick(item, aliases.stage)),
@@ -194,15 +198,10 @@ const examplesPage = () => `<div class="page">
 
 const granteesPage = () => `<div class="page">
   ${pageHero('GRANTEE DIRECTORY', '获项目支持的社企名录', '以下名录收录曾参加线下训练营的社会企业', '')}
-  <section class="grantee-grid">
-    ${grantees.map((item) => `<article class="grantee-card">
-      <div class="grantee-logo">${escapeHtml(item.name.slice(0, 2))}</div>
-      <div>
-        <h3>${escapeHtml(item.name)}</h3>
-        <p>${escapeHtml(item.focus)}</p>
-        <span>关联文章：${escapeHtml(item.article)}</span>
-      </div>
-    </article>`).join('')}
+  <section class="archive-shell grantee-shell">
+    <div id="grantee-project-filters" class="project-checks" aria-label="按项目计划筛选"></div>
+    <div class="archive-meta"><span id="grantee-count">正在读取名录…</span></div>
+    <div id="grantee-grid" class="grantee-grid"><div class="loading">正在整理社企名录…</div></div>
   </section>
 </div>`;
 
@@ -212,7 +211,6 @@ function escapeHtml(value) {
 
 function articleCard(article) {
   const detailItems = [
-    article.source && `<span><strong>来源公众号：</strong>${escapeHtml(article.source)}</span>`,
     article.project && `<span><strong>项目名称：</strong>${escapeHtml(article.project)}</span>`,
     article.type && `<span><strong>内容类型：</strong>${escapeHtml(article.type)}</span>`,
     article.stage && `<span><strong>项目阶段：</strong>${escapeHtml(article.stage)}</span>`,
@@ -312,6 +310,50 @@ async function initExamples() {
   }
 }
 
+function granteeCard(item) {
+  return `<article class="grantee-card">
+    <div class="grantee-logo">${escapeHtml(item.name.slice(0, 2))}</div>
+    <div>
+      <div class="article-meta">
+        ${item.projectPlan ? `<span class="pill accent">${escapeHtml(item.projectPlan)}</span>` : ''}
+        ${item.grantAmount ? '<span class="pill funded-pill">获资助</span>' : ''}
+      </div>
+      <h3>${escapeHtml(item.name)}</h3>
+      ${item.direction ? `<p><strong>公司方向：</strong>${escapeHtml(item.direction)}</p>` : ''}
+      ${item.summary ? `<span>${escapeHtml(item.summary)}</span>` : ''}
+    </div>
+  </article>`;
+}
+
+async function initGrantees() {
+  const grid = document.querySelector('#grantee-grid');
+  if (!grid) return;
+  try {
+    const items = await loadGrantees();
+    const filterWrap = document.querySelector('#grantee-project-filters');
+    const projects = [...new Set(items.map((item) => item.projectPlan).filter(Boolean))].sort();
+    let activeProject = '';
+    filterWrap.innerHTML = `<button class="project-check active" type="button" data-project="">全部项目计划</button>` +
+      projects.map((project) => `<button class="project-check" type="button" data-project="${escapeHtml(project)}">${escapeHtml(project)}</button>`).join('');
+    const render = () => {
+      const filtered = items.filter((item) => !activeProject || item.projectPlan === activeProject);
+      document.querySelector('#grantee-count').textContent = `共 ${filtered.length} 家社会企业`;
+      grid.innerHTML = filtered.map(granteeCard).join('');
+    };
+    filterWrap.addEventListener('click', (event) => {
+      const button = event.target.closest('.project-check');
+      if (!button) return;
+      activeProject = button.dataset.project;
+      filterWrap.querySelectorAll('.project-check').forEach((item) => item.classList.toggle('active', item === button));
+      render();
+    });
+    render();
+  } catch (error) {
+    document.querySelector('#grantee-count').textContent = '名录读取失败';
+    grid.innerHTML = `<div class="empty-state"><h3>暂时无法读取社企名录</h3><p>${escapeHtml(error.message)}</p></div>`;
+  }
+}
+
 async function initReview() {
   const grid = document.querySelector('#review-grid');
   if (!grid) return;
@@ -351,6 +393,7 @@ function renderRoute() {
   window.scrollTo({ top: 0, behavior: 'instant' });
   initArchive();
   initExamples();
+  initGrantees();
   initReview();
 }
 
