@@ -193,7 +193,7 @@ const examplesPage = () => `<div class="page">
 </div>`;
 
 const granteesPage = () => `<div class="page">
-  ${pageHero('GRANTEE DIRECTORY', '获项目支持的社企名录', '以下名录收录曾参加线下训练营的社会企业', '目前先以文字徽标和简介呈现，后续拿到正式 logo 后可替换为图片版名录。')}
+  ${pageHero('GRANTEE DIRECTORY', '获项目支持的社企名录', '以下名录收录曾参加线下训练营的社会企业', '')}
   <section class="grantee-grid">
     ${grantees.map((item) => `<article class="grantee-card">
       <div class="grantee-logo">${escapeHtml(item.name.slice(0, 2))}</div>
