@@ -123,6 +123,27 @@ const dashboardStats = [
   { value: '42城', label: '覆盖城市' },
 ];
 
+const posterGroups = [
+  {
+    id: 'upper',
+    title: '上半期 20 家机构介绍海报',
+    subtitle: '2025-2026 社会企业助力计划 · 上半期',
+    description: '以机构介绍为主，适合作为项目伙伴展示和社企名录的视觉补充。',
+    folder: 'upper',
+    prefix: 'upper',
+    count: 20,
+  },
+  {
+    id: 'lower',
+    title: '下半期 20 家社企人物海报',
+    subtitle: '2025-2026 社会企业助力计划 · 下半期',
+    description: '以人物与议题表达为主，适合放在项目成果、创业家故事和活动传播入口。',
+    folder: 'lower',
+    prefix: 'lower',
+    count: 20,
+  },
+];
+
 const issueDistribution = [
   ['残障康复/融合', '19.7%'],
   ['教育公平/创新', '11.2%'],
@@ -235,6 +256,9 @@ const homePage = () => `
           <p>${item.text}</p>
           <strong>${item.data}</strong>
         </article>`).join('')}
+      </div>
+      <div class="section-actions">
+        <a class="button primary" href="/posters" data-link>查看 2025-2026 社企海报墙</a>
       </div>
     </section>
     <section id="dashboard" class="dashboard-section home-block">
@@ -361,6 +385,31 @@ const granteesPage = () => `<div class="page">
   </section>
 </div>`;
 
+const postersPage = () => `<div class="page">
+  ${pageHero('POSTER GALLERY', '2025-2026 社企海报墙', '集中呈现上下半期 40 家社企海报', '这里收录 2025-2026 社会企业助力计划上下半期海报素材。上半期为机构介绍海报，下半期为社企人物海报。')}
+  <section class="poster-shell">
+    ${posterGroups.map((group) => `<article class="poster-group" id="${group.id}">
+      <div class="section-heading poster-heading">
+        <div>
+          <p class="eyebrow">${group.subtitle}</p>
+          <h2>${group.title}</h2>
+        </div>
+        <p>${group.description}</p>
+      </div>
+      <div class="poster-grid">
+        ${Array.from({ length: group.count }, (_, index) => {
+          const num = String(index + 1).padStart(2, '0');
+          const src = `/assets/posters/2025-2026/${group.folder}/${group.prefix}-${num}.jpg`;
+          return `<a class="poster-card" href="${src}" target="_blank" rel="noopener noreferrer" aria-label="${group.title} ${num}">
+            <img src="${src}" alt="${group.title} ${num}" loading="lazy" />
+            <span>${num}</span>
+          </a>`;
+        }).join('')}
+      </div>
+    </article>`).join('')}
+  </section>
+</div>`;
+
 function escapeHtml(value) {
   return String(value).replace(/[&<>'"]/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[char]));
 }
@@ -396,6 +445,18 @@ function isExampleArticle(article) {
     /社企档案|拿起画笔|小实验|初心8年|餐桌安全|农产品滞销|好好吃药/.test(text);
   const isActivity = /沙龙|招募|报名|回顾|开营|路演|决赛|入围|启动|预告/.test(text);
   return isStory && !isActivity;
+}
+
+function compactText(value, maxLength = 42) {
+  const cleaned = String(value || '')
+    .replace(/\s+/g, ' ')
+    .replace(/^公司方向[:：]\s*/, '')
+    .replace(/^其他[:：]\s*/, '')
+    .replace(/具体为[:：].*$/, '')
+    .replace(/包括[:：].*$/, '')
+    .trim();
+  const firstPart = cleaned.split(/[。；;，,：:]/).map((part) => part.trim()).find(Boolean) || cleaned;
+  return firstPart.length > maxLength ? `${firstPart.slice(0, maxLength)}…` : firstPart;
 }
 
 async function initArchive() {
@@ -469,7 +530,8 @@ async function initExamples() {
 
 function granteeCard(item) {
   const summary = String(item.summary || '').replace(/\s+/g, ' ').trim();
-  const shortSummary = summary.length > 92 ? `${summary.slice(0, 92)}…` : summary;
+  const shortDirection = compactText(item.direction, 38);
+  const shortSummary = compactText(summary, 62);
   return `<article class="grantee-card">
     <div class="grantee-logo">${escapeHtml(item.name.slice(0, 2))}</div>
     <div>
@@ -478,7 +540,7 @@ function granteeCard(item) {
         ${item.grantAmount ? '<span class="pill funded-pill">获资助</span>' : ''}
       </div>
       <h3>${escapeHtml(item.name)}</h3>
-      ${item.direction ? `<p><strong>公司方向：</strong>${escapeHtml(item.direction)}</p>` : ''}
+      ${shortDirection ? `<p><strong>公司方向：</strong>${escapeHtml(shortDirection)}</p>` : ''}
       ${shortSummary ? `<span>${escapeHtml(shortSummary)}</span>` : ''}
     </div>
   </article>`;
@@ -557,7 +619,7 @@ async function initReview() {
   }
 }
 
-const routes = { '/': homePage, '/content': contentPage, '/examples': examplesPage, '/review': reviewPage, '/grantees': granteesPage, '/about': aboutPage };
+const routes = { '/': homePage, '/content': contentPage, '/examples': examplesPage, '/review': reviewPage, '/grantees': granteesPage, '/posters': postersPage, '/about': aboutPage };
 
 function renderRoute() {
   const path = window.location.pathname.replace(/\/$/, '') || '/';

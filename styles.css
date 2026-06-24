@@ -362,6 +362,66 @@ button { cursor: pointer; }
 .ecosystem-grid span { color: var(--green); font-weight: 800; letter-spacing: .12em; }
 .ecosystem-grid h3 { margin: 46px 0 14px; font-size: 24px; }
 .ecosystem-grid p { margin: 0; color: var(--muted); line-height: 1.8; }
+.poster-shell {
+  width: min(1180px, 92vw);
+  margin: 0 auto;
+  padding-bottom: 110px;
+}
+.poster-group {
+  margin-bottom: 54px;
+  padding: 32px;
+  background: rgba(255,255,255,.68);
+  border: 1px solid rgba(255,255,255,.92);
+  border-radius: 32px;
+}
+.poster-heading {
+  align-items: flex-start;
+}
+.poster-heading .eyebrow {
+  margin-bottom: 12px;
+}
+.poster-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 18px;
+}
+.poster-card {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid rgba(20, 60, 43, .08);
+  border-radius: 22px;
+  box-shadow: 0 12px 34px rgba(20, 60, 43, .045);
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.poster-card:hover {
+  box-shadow: var(--shadow);
+  transform: translateY(-3px);
+}
+.poster-card img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: contain;
+  object-position: top center;
+  background: #f6f8f6;
+}
+.poster-card span {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  color: var(--green-dark);
+  background: rgba(255,255,255,.88);
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 800;
+  box-shadow: 0 6px 18px rgba(20,60,43,.12);
+}
 
 .stats, .feature-section, .review-grid, .about-grid, .grantee-grid {
   width: min(1160px, 92vw);
@@ -585,9 +645,21 @@ button { cursor: pointer; }
 }
 .grantee-card > div:last-child { position: relative; z-index: 1; }
 .grantee-card h3 { margin: 0 0 14px; font-size: 22px; line-height: 1.35; letter-spacing: -.02em; }
-.grantee-card p { margin: 0 0 12px; padding: 12px 14px; color: var(--green-dark); background: rgba(223, 233, 226, .58); border-radius: 14px; line-height: 1.65; }
+.grantee-card p {
+  display: -webkit-box;
+  min-height: 52px;
+  margin: 0 0 12px;
+  padding: 12px 14px;
+  overflow: hidden;
+  color: var(--green-dark);
+  background: rgba(223, 233, 226, .58);
+  border-radius: 14px;
+  line-height: 1.55;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
 .grantee-card p strong { color: #3b453f; font-weight: 700; }
-.grantee-card span { display: -webkit-box; max-height: 4.8em; overflow: hidden; color: #78827b; font-size: 13px; line-height: 1.6; -webkit-box-orient: vertical; -webkit-line-clamp: 3; }
+.grantee-card span { display: -webkit-box; max-height: 3.2em; overflow: hidden; color: #78827b; font-size: 13px; line-height: 1.6; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
 
 .funded-pill { color: #6b4c00; background: #fff3c4; }
 
@@ -615,7 +687,7 @@ button { cursor: pointer; }
   .hero { grid-template-columns: 1fr; min-height: auto; padding-top: 70px; }
   .hero-visual { min-height: 390px; margin-top: 20px; }
   .stats, .feature-cards, .grantee-grid { grid-template-columns: 1fr; }
-  .impact-strip, .timeline, .dashboard-grid, .story-grid, .ecosystem-grid { grid-template-columns: repeat(2, 1fr); }
+  .impact-strip, .timeline, .dashboard-grid, .story-grid, .ecosystem-grid, .poster-grid { grid-template-columns: repeat(2, 1fr); }
   .timeline::before { display: none; }
   .insight-grid, .method-grid { grid-template-columns: 1fr; }
   .main-method { grid-row: auto; }
@@ -633,7 +705,8 @@ button { cursor: pointer; }
   .orb-one { right: 0; }
   .visual-note { right: 35px; }
   .stats { margin-bottom: 78px; }
-  .impact-strip, .timeline, .dashboard-grid, .story-grid, .stage-grid, .ecosystem-grid { grid-template-columns: 1fr; }
+  .impact-strip, .timeline, .dashboard-grid, .story-grid, .stage-grid, .ecosystem-grid, .poster-grid { grid-template-columns: 1fr; }
+  .poster-group { padding: 18px; border-radius: 24px; }
   .bar-row { grid-template-columns: 1fr 1fr; gap: 8px; }
   .bar-row div { grid-column: 1 / -1; grid-row: 2; }
   .project-hero { min-height: auto; }
