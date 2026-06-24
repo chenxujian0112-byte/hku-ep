@@ -6,13 +6,13 @@ document.querySelector('#copyright-year').textContent = new Date().getFullYear()
 
 const eventCategories = [
   {
-    name: '2021 社会企业助力计划',
+    name: '社会企业助力计划（一期）',
     period: '2021-2022',
     match: (article) => ['社会企业疫后助力计划', '社会企业助力计划'].includes(article.project) && Number(article.year) <= 2022,
     description: '从疫后纾困、种子基金到课程赋能与案例传播，支持社会企业恢复经营并提升长期发展能力。',
   },
   {
-    name: '2022-2023 社会企业助力计划',
+    name: '社会企业助力计划（二期）',
     period: '2022-2024',
     match: (article) => article.project === '社会企业助力计划（二期）',
     description: '围绕社企加速营、影响力投资、社区服务场景与种子基金支持，形成第二阶段项目陪伴。',
@@ -24,10 +24,10 @@ const eventCategories = [
     description: '聚焦女性社会创业家，记录项目招募、主题沙龙、线上路演、开营和线下路演等关键节点。',
   },
   {
-    name: '2025-2026 社会企业助力计划',
+    name: '2025 社会企业助力计划（升级版）',
     period: '2025-2026',
     match: (article) => article.project === '2025 社会企业助力计划',
-    description: '从项目启动、20强入围、决赛训练营到生态升级，呈现项目从资助支持走向长期社群建设。',
+    description: '从新一期启动、20强入围、决赛训练营到生态升级，呈现项目从资助支持走向长期社群建设。',
   },
   {
     name: '「她力量」特别企划',
@@ -60,56 +60,45 @@ const grantees = [
   { name: '老友青年 / 鸣渊园', focus: '代际陪伴、社区活动与银发友好连接', article: '她用一个小实验，搭建起年轻人与老年人的温暖桥梁' },
 ];
 
-const projectDisplayNames = {
-  '2021社企助力计划一期': '2021 社会企业助力计划',
-  '2022-2023社企助力计划二期（社区民生）': '2022-2023 社会企业助力计划（社区民生）',
-  '2023-2024她山之力女性社会企业家加速计划': '2023-2024 她山之力女性社会创业家加速计划',
-  '2025-2026社企助力计划三期': '2025-2026 社会企业助力计划',
-};
-
-function displayProjectPlan(projectPlan) {
-  return projectDisplayNames[projectPlan] || projectPlan || '';
-}
-
 const journeyItems = [
   {
-    phase: '2021',
+    phase: '一期',
     period: '2021',
-    title: '社会企业助力计划',
+    title: '应急响应',
     theme: '疫情困境下的社会企业支持',
     data: '疫后纾困 · 种子基金 · 能力建设',
     text: '从疫情影响下的经营恢复出发，帮助社会企业获得资金、课程和传播支持，稳住组织基本盘。',
   },
   {
-    phase: '2022-2023',
+    phase: '二期',
     period: '2022-2023',
-    title: '社会企业助力计划',
+    title: '社区民生',
     theme: '社区及民生相关机构成长',
     data: '社区场景 · 民生议题 · 社企加速',
     text: '围绕社区服务、民生需求和影响力投资，推动社会企业在真实场景里验证服务与商业模式。',
   },
   {
-    phase: '2023-2024',
+    phase: '三期',
     period: '2023-2024',
-    title: '她山之力女性社会创业家加速计划',
+    title: '她山之力',
     theme: '女性社会创业家加速',
     data: '女性社创 · 路演训练 · 议题表达',
     text: '专门支持女性社会创业者，把商业可持续、议题表达和组织成长放在同一张发展图谱里。',
   },
   {
-    phase: '2025-2026',
+    phase: '四期',
     period: '2025-2026',
-    title: '社会企业助力计划',
+    title: '可持续发展',
     theme: '1-10阶段社企的系统赋能',
     data: '205申请 · 97赋能 · 16资助 · 152家数据库',
     text: '在更宽的议题赛道中筛选和陪伴社会企业，形成从训练营、决赛到长期社群的支持闭环。',
   },
   {
-    phase: '未来',
-    period: '持续迭代',
-    title: '社会创新支持网络',
+    phase: '新一期',
+    period: '2027规划中',
+    title: 'AI + 社创',
     theme: 'AI赛道、OPC与全周期陪伴',
-    data: '方向预留 · 内容待补充',
+    data: '规划方向展示',
     text: '预留下一阶段项目方向，未来可扩展在线申请、AI诊断和创业者主页等互动能力。',
   },
 ];
@@ -208,8 +197,8 @@ const homePage = () => `
     <section class="hero project-hero">
       <div>
         <p class="eyebrow">渣打银行 x 恩派公益</p>
-        <h1>陪伴社会企业<span>走稳更远</span></h1>
-        <p class="hero-lead">社会企业助力计划深度陪伴 130+ 社会企业，从“项目能做”走向“组织能稳”，用数据沉淀成果，也用案例呈现改变如何发生。</p>
+        <h1>用五年时间<span>陪伴社会企业走稳更远</span></h1>
+        <p class="hero-lead">社会企业助力计划陪伴 130+ 社会企业，从“项目能做”走向“组织能稳”，用数据沉淀成果，也用故事呈现改变如何发生。</p>
         <div class="button-row">
           <a class="button primary" href="/#dashboard" data-link>了解项目成果</a>
           <a class="button" href="/examples" data-link>查看创业者故事</a>
@@ -225,7 +214,7 @@ const homePage = () => `
       ${dashboardStats.slice(0, 5).map((item) => `<div class="stat"><strong>${item.value}</strong><span>${item.label}</span></div>`).join('')}
     </section>
     <section id="journey" class="feature-section home-block">
-      <div class="section-heading"><h2>项目历程</h2><p>从疫后支持、社区民生、女性社创到 2025-2026 社会企业助力计划，项目在不同阶段回应不同社会议题。</p></div>
+      <div class="section-heading"><h2>五年历程</h2><p>从疫后支持、社区民生、女性社创到 2025-2026 升级版，项目在不同阶段回应不同社会议题。</p></div>
       <div class="timeline">
         ${journeyItems.map((item) => `<article class="timeline-card">
           <div class="timeline-node">${item.phase}</div>
@@ -260,7 +249,7 @@ const homePage = () => `
       </div>
     </section>
     <section id="stories" class="feature-section home-block">
-      <div class="section-heading"><h2>创业家故事</h2><p>让数字回到具体的人和组织。这里集中呈现被支持社会企业的案例与成长实践。</p></div>
+      <div class="section-heading"><h2>创业者故事</h2><p>让数字有具体的人和组织。这里先放精选入口，完整案例可进入“创业者故事”和“获项目支持的社企名录”查看。</p></div>
       <div class="story-grid">
         ${grantees.slice(0, 6).map((item) => `<article class="story-card">
           <div class="story-avatar">${item.name.slice(0, 2)}</div>
@@ -342,7 +331,7 @@ const aboutPage = () => `<div class="page">
 </div>`;
 
 const examplesPage = () => `<div class="page">
-  ${pageHero('SUPPORTED CASES', '创业家故事', '呈现被支持社会企业的成长实践', '这里仅收录人物故事、企业案例和案例传播类内容，活动回顾、活动招募和沙龙内容不纳入本页。')}
+  ${pageHero('SUPPORTED CASES', '创业家故事', '把被支持企业的故事单独看见', '这里集中呈现项目故事、案例传播和特别企划中的企业案例，方便快速了解资助企业的实践方向。')}
   <section class="archive-shell">
     <div class="archive-meta"><span id="examples-count">正在读取案例…</span></div>
     <div id="examples-list" class="article-list"><div class="loading">正在整理创业家故事…</div></div>
@@ -352,9 +341,6 @@ const examplesPage = () => `<div class="page">
 const granteesPage = () => `<div class="page">
   ${pageHero('GRANTEE DIRECTORY', '获项目支持的社企名录', '以下名录收录曾参加线下训练营的社会企业', '')}
   <section class="archive-shell grantee-shell">
-    <div class="grantee-search">
-      <label class="control"><span class="sr-only">搜索社企名录</span><input id="grantee-search" type="search" placeholder="搜索企业名称、方向、项目期数或关键词" /></label>
-    </div>
     <div id="grantee-project-filters" class="project-checks" aria-label="按项目计划筛选"></div>
     <div class="archive-meta"><span id="grantee-count">正在读取名录…</span></div>
     <div id="grantee-grid" class="grantee-grid"><div class="loading">正在整理社企名录…</div></div>
@@ -390,12 +376,11 @@ function articleCard(article) {
 }
 
 function isExampleArticle(article) {
-  const text = `${article.title} ${article.type} ${article.stage} ${article.tags.join(' ')}`;
-  const isStory = article.type === '项目故事' ||
+  const text = `${article.title} ${article.project} ${article.type} ${article.stage} ${article.tags.join(' ')}`;
+  return article.type === '项目故事' ||
+    article.type === '特别企划' ||
     article.stage === '案例传播' ||
-    /社企档案|拿起画笔|小实验|初心8年|餐桌安全|农产品滞销|好好吃药/.test(text);
-  const isActivity = /沙龙|招募|报名|回顾|开营|路演|决赛|入围|启动|预告/.test(text);
-  return isStory && !isActivity;
+    /案例|故事|社企档案|她力量/.test(text);
 }
 
 async function initArchive() {
@@ -468,18 +453,16 @@ async function initExamples() {
 }
 
 function granteeCard(item) {
-  const summary = String(item.summary || '').replace(/\s+/g, ' ').trim();
-  const shortSummary = summary.length > 92 ? `${summary.slice(0, 92)}…` : summary;
   return `<article class="grantee-card">
     <div class="grantee-logo">${escapeHtml(item.name.slice(0, 2))}</div>
     <div>
       <div class="article-meta">
-        ${item.projectPlan ? `<span class="pill accent">${escapeHtml(displayProjectPlan(item.projectPlan))}</span>` : ''}
+        ${item.projectPlan ? `<span class="pill accent">${escapeHtml(item.projectPlan)}</span>` : ''}
         ${item.grantAmount ? '<span class="pill funded-pill">获资助</span>' : ''}
       </div>
       <h3>${escapeHtml(item.name)}</h3>
       ${item.direction ? `<p><strong>公司方向：</strong>${escapeHtml(item.direction)}</p>` : ''}
-      ${shortSummary ? `<span>${escapeHtml(shortSummary)}</span>` : ''}
+      ${item.summary ? `<span>${escapeHtml(item.summary)}</span>` : ''}
     </div>
   </article>`;
 }
@@ -490,31 +473,15 @@ async function initGrantees() {
   try {
     const items = await loadGrantees();
     const filterWrap = document.querySelector('#grantee-project-filters');
-    const searchInput = document.querySelector('#grantee-search');
     const projects = [...new Set(items.map((item) => item.projectPlan).filter(Boolean))].sort();
     let activeProject = '';
     filterWrap.innerHTML = `<button class="project-check active" type="button" data-project="">全部项目计划</button>` +
-      projects.map((project) => `<button class="project-check" type="button" data-project="${escapeHtml(project)}">${escapeHtml(displayProjectPlan(project))}</button>`).join('');
+      projects.map((project) => `<button class="project-check" type="button" data-project="${escapeHtml(project)}">${escapeHtml(project)}</button>`).join('');
     const render = () => {
-      const keyword = searchInput.value.trim().toLowerCase();
-      const filtered = items.filter((item) => {
-        const searchText = [
-          item.name,
-          item.direction,
-          item.summary,
-          item.projectPlan,
-          displayProjectPlan(item.projectPlan),
-          item.city,
-          item.location,
-          item.area,
-        ].filter(Boolean).join(' ').toLowerCase();
-        return (!activeProject || item.projectPlan === activeProject) &&
-          (!keyword || searchText.includes(keyword));
-      });
+      const filtered = items.filter((item) => !activeProject || item.projectPlan === activeProject);
       document.querySelector('#grantee-count').textContent = `共 ${filtered.length} 家社会企业`;
-      grid.innerHTML = filtered.length ? filtered.map(granteeCard).join('') : '<div class="empty-state"><h3>没有找到匹配社企</h3><p>试试更换企业名称、城市或方向关键词。</p></div>';
+      grid.innerHTML = filtered.map(granteeCard).join('');
     };
-    searchInput.addEventListener('input', render);
     filterWrap.addEventListener('click', (event) => {
       const button = event.target.closest('.project-check');
       if (!button) return;

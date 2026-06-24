@@ -508,17 +508,6 @@ button { cursor: pointer; }
 }
 .grantee-shell { padding-bottom: 0; }
 .grantee-filters { grid-template-columns: minmax(240px, 420px); }
-.grantee-search {
-  margin: 10px 0 14px;
-  padding: 18px;
-  background: rgba(255,255,255,.72);
-  border: 1px solid rgba(255,255,255,.9);
-  border-radius: 22px;
-}
-.grantee-search .control {
-  display: block;
-  max-width: 560px;
-}
 .project-checks {
   display: flex;
   flex-wrap: wrap;
