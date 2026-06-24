@@ -260,7 +260,6 @@ const homePage = () => `
       <div class="timeline">
         ${journeyItems.map((item) => `<a class="timeline-card" href="/project?slug=${escapeHtml(item.slug)}" data-link>
           <div class="timeline-node">${item.phase}</div>
-          <span class="pill accent">${item.period}</span>
           <h3>${item.title}</h3>
           <p class="timeline-theme">${item.theme}</p>
           <p>${item.text}</p>
@@ -391,6 +390,7 @@ const granteesPage = () => `<div class="page">
       <label class="control"><span class="sr-only">搜索社企名录</span><input id="grantee-search" type="search" placeholder="搜索企业名称、方向、项目期数或关键词" /></label>
     </div>
     <div id="grantee-project-filters" class="project-checks" aria-label="按项目计划筛选"></div>
+    <div id="grantee-city-filters" class="project-checks city-checks" aria-label="按城市筛选"></div>
     <div class="archive-meta"><span id="grantee-count">正在读取名录…</span></div>
     <div id="grantee-grid" class="grantee-grid"><div class="loading">正在整理社企名录…</div></div>
   </section>
@@ -578,6 +578,7 @@ function granteeCard(item) {
     <div>
       <div class="article-meta">
         ${item.projectPlan ? `<span class="pill accent">${escapeHtml(displayProjectPlan(item.projectPlan))}</span>` : ''}
+        ${item.city ? `<span class="pill city-pill">${escapeHtml(item.city)}</span>` : ''}
         ${item.grantAmount ? '<span class="pill funded-pill">获资助</span>' : ''}
       </div>
       <h3>${escapeHtml(item.name)}</h3>
@@ -593,11 +594,16 @@ async function initGrantees() {
   try {
     const items = await loadGrantees();
     const filterWrap = document.querySelector('#grantee-project-filters');
+    const cityWrap = document.querySelector('#grantee-city-filters');
     const searchInput = document.querySelector('#grantee-search');
     const projects = [...new Set(items.map((item) => item.projectPlan).filter(Boolean))].sort();
+    const cities = [...new Set(items.map((item) => item.city).filter(Boolean))].sort((a, b) => a.localeCompare(b, 'zh-CN'));
     let activeProject = '';
+    let activeCity = '';
     filterWrap.innerHTML = `<button class="project-check active" type="button" data-project="">全部项目计划</button>` +
       projects.map((project) => `<button class="project-check" type="button" data-project="${escapeHtml(project)}">${escapeHtml(displayProjectPlan(project))}</button>`).join('');
+    cityWrap.innerHTML = `<button class="project-check active" type="button" data-city="">全部城市</button>` +
+      cities.map((city) => `<button class="project-check" type="button" data-city="${escapeHtml(city)}">${escapeHtml(city)}</button>`).join('');
     const render = () => {
       const keyword = searchInput.value.trim().toLowerCase();
       const filtered = items.filter((item) => {
@@ -612,6 +618,7 @@ async function initGrantees() {
           item.area,
         ].filter(Boolean).join(' ').toLowerCase();
         return (!activeProject || item.projectPlan === activeProject) &&
+          (!activeCity || item.city === activeCity) &&
           (!keyword || searchText.includes(keyword));
       });
       document.querySelector('#grantee-count').textContent = `共 ${filtered.length} 家社会企业`;
@@ -623,6 +630,13 @@ async function initGrantees() {
       if (!button) return;
       activeProject = button.dataset.project;
       filterWrap.querySelectorAll('.project-check').forEach((item) => item.classList.toggle('active', item === button));
+      render();
+    });
+    cityWrap.addEventListener('click', (event) => {
+      const button = event.target.closest('.project-check');
+      if (!button) return;
+      activeCity = button.dataset.city;
+      cityWrap.querySelectorAll('.project-check').forEach((item) => item.classList.toggle('active', item === button));
       render();
     });
     render();

@@ -648,12 +648,13 @@ button { cursor: pointer; }
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  margin: 10px 0 24px;
+  margin: 10px 0 14px;
   padding: 18px;
   background: rgba(255,255,255,.72);
   border: 1px solid rgba(255,255,255,.9);
   border-radius: 22px;
 }
+.city-checks { margin-bottom: 24px; }
 .project-check {
   min-height: 40px;
   padding: 0 16px;
@@ -727,6 +728,7 @@ button { cursor: pointer; }
 .grantee-card span { display: -webkit-box; max-height: 3.2em; overflow: hidden; color: #78827b; font-size: 13px; line-height: 1.6; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
 
 .funded-pill { color: #6b4c00; background: #fff3c4; }
+.city-pill { color: #24503a; background: #edf4ef; }
 
 .site-footer {
   display: grid;
