@@ -73,6 +73,8 @@ function displayProjectPlan(projectPlan) {
 
 const journeyItems = [
   {
+    slug: 'se-2021',
+    categoryName: '2021 社会企业助力计划',
     phase: '2021',
     period: '2021',
     title: '社会企业助力计划',
@@ -81,6 +83,8 @@ const journeyItems = [
     text: '从疫情影响下的经营恢复出发，帮助社会企业获得资金、课程和传播支持，稳住组织基本盘。',
   },
   {
+    slug: 'se-2022-2023',
+    categoryName: '2022-2023 社会企业助力计划',
     phase: '2022-2023',
     period: '2022-2023',
     title: '社会企业助力计划',
@@ -89,6 +93,8 @@ const journeyItems = [
     text: '围绕社区服务、民生需求和影响力投资，推动社会企业在真实场景里验证服务与商业模式。',
   },
   {
+    slug: 'women-2023-2024',
+    categoryName: '她山之力女性社会创业家加速计划',
     phase: '2023-2024',
     period: '2023-2024',
     title: '她山之力女性社会创业家加速计划',
@@ -97,6 +103,8 @@ const journeyItems = [
     text: '专门支持女性社会创业者，把商业可持续、议题表达和组织成长放在同一张发展图谱里。',
   },
   {
+    slug: 'se-2025-2026',
+    categoryName: '2025-2026 社会企业助力计划',
     phase: '2025-2026',
     period: '2025-2026',
     title: '社会企业助力计划',
@@ -105,6 +113,8 @@ const journeyItems = [
     text: '在更宽的议题赛道中筛选和陪伴社会企业，形成从训练营、决赛到长期社群的支持闭环。',
   },
   {
+    slug: 'future',
+    categoryName: '',
     phase: '未来',
     period: '持续迭代',
     title: '社会创新支持网络',
@@ -248,14 +258,15 @@ const homePage = () => `
     <section id="journey" class="feature-section home-block">
       <div class="section-heading"><h2>项目历程</h2><p>从疫后支持、社区民生、女性社创到 2025-2026 社会企业助力计划，项目在不同阶段回应不同社会议题。</p></div>
       <div class="timeline">
-        ${journeyItems.map((item) => `<article class="timeline-card">
+        ${journeyItems.map((item) => `<a class="timeline-card" href="/project?slug=${escapeHtml(item.slug)}" data-link>
           <div class="timeline-node">${item.phase}</div>
           <span class="pill accent">${item.period}</span>
           <h3>${item.title}</h3>
           <p class="timeline-theme">${item.theme}</p>
           <p>${item.text}</p>
           <strong>${item.data}</strong>
-        </article>`).join('')}
+          <span class="timeline-link">查看项目介绍 →</span>
+        </a>`).join('')}
       </div>
       <div class="section-actions">
         <a class="button primary" href="/posters" data-link>查看 2025-2026 社企海报墙</a>
@@ -409,6 +420,36 @@ const postersPage = () => `<div class="page">
     </article>`).join('')}
   </section>
 </div>`;
+
+const projectPage = () => {
+  const params = new URLSearchParams(window.location.search);
+  const slug = params.get('slug') || journeyItems[0].slug;
+  const item = journeyItems.find((entry) => entry.slug === slug) || journeyItems[0];
+  return `<div class="page">
+    ${pageHero('PROJECT DETAIL', `${item.period} ${item.title}`, item.theme, item.text)}
+    <section class="project-detail-shell">
+      <article class="project-intro-card">
+        <div>
+          <p class="eyebrow">项目介绍</p>
+          <h3>${escapeHtml(item.title)}</h3>
+          <p>${escapeHtml(item.text)}</p>
+        </div>
+        <div class="project-facts">
+          <span><strong>时间</strong>${escapeHtml(item.period)}</span>
+          <span><strong>关键词</strong>${escapeHtml(item.data)}</span>
+        </div>
+      </article>
+      ${item.slug === 'se-2025-2026' ? `<div class="project-extra-actions">
+        <a class="button primary" href="/posters" data-link>查看 2025-2026 社企海报墙</a>
+      </div>` : ''}
+      <div class="section-heading project-article-heading">
+        <h2>相关推文与活动</h2>
+        <p>这里自动汇总项目档案中属于这一期的公开推文、招募、活动回顾、案例传播和成果内容。</p>
+      </div>
+      <div id="project-article-list" class="article-list"><div class="loading">正在读取相关内容…</div></div>
+    </section>
+  </div>`;
+};
 
 function escapeHtml(value) {
   return String(value).replace(/[&<>'"]/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[char]));
@@ -619,7 +660,25 @@ async function initReview() {
   }
 }
 
-const routes = { '/': homePage, '/content': contentPage, '/examples': examplesPage, '/review': reviewPage, '/grantees': granteesPage, '/posters': postersPage, '/about': aboutPage };
+async function initProjectDetail() {
+  const listEl = document.querySelector('#project-article-list');
+  if (!listEl) return;
+  const params = new URLSearchParams(window.location.search);
+  const item = journeyItems.find((entry) => entry.slug === params.get('slug')) || journeyItems[0];
+  const category = eventCategories.find((entry) => entry.name === item.categoryName);
+  if (!category) {
+    listEl.innerHTML = '<div class="empty-state"><h3>相关内容待补充</h3><p>这一阶段目前作为方向预留，后续可继续补充项目资料。</p></div>';
+    return;
+  }
+  try {
+    const articles = (await loadArticles()).filter(category.match);
+    listEl.innerHTML = articles.length ? articles.map(articleCard).join('') : '<div class="empty-state"><h3>暂无匹配内容</h3><p>后续可继续补充这一期的推文和活动资料。</p></div>';
+  } catch (error) {
+    listEl.innerHTML = `<div class="empty-state"><h3>暂时无法读取相关内容</h3><p>${escapeHtml(error.message)}</p></div>`;
+  }
+}
+
+const routes = { '/': homePage, '/content': contentPage, '/examples': examplesPage, '/review': reviewPage, '/grantees': granteesPage, '/posters': postersPage, '/project': projectPage, '/about': aboutPage };
 
 function renderRoute() {
   const path = window.location.pathname.replace(/\/$/, '') || '/';
@@ -642,6 +701,7 @@ function renderRoute() {
   initExamples();
   initGrantees();
   initReview();
+  initProjectDetail();
 }
 
 document.addEventListener('click', (event) => {
