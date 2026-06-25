@@ -129,17 +129,6 @@ const journeyItems = [
       { src: '/assets/project-banners/2025-2026/cocreation-workshop.jpg', title: '2025 共创工作坊合照' },
     ],
   },
-  {
-    slug: 'future',
-    categoryName: '',
-    phase: '未来',
-    period: '持续迭代',
-    title: '社会创新支持网络',
-    theme: 'AI赛道、OPC与全周期陪伴',
-    data: '方向预留 · 内容待补充',
-    text: '预留下一阶段项目方向，未来可扩展在线申请、AI诊断和创业者主页等互动能力。',
-    banners: [],
-  },
 ];
 
 const dashboardStats = [
