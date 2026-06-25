@@ -82,8 +82,8 @@ const journeyItems = [
     data: '疫后纾困 · 种子基金 · 能力建设',
     text: '从疫情影响下的经营恢复出发，帮助社会企业获得资金、课程和传播支持，稳住组织基本盘。',
     banners: [
-      { src: 'assets/project-banners/2021/phase-2021-01.jpg', title: '2021 上海沙龙合照' },
-      { src: 'assets/project-banners/2021/phase-2021-02.jpg', title: '2021 深圳沙龙合照' },
+      { src: '/assets/project-banners/2021/phase-2021-01.jpg', title: '2021 上海沙龙合照' },
+      { src: '/assets/project-banners/2021/phase-2021-02.jpg', title: '2021 深圳沙龙合照' },
     ],
   },
   {
@@ -96,8 +96,8 @@ const journeyItems = [
     data: '社区场景 · 民生议题 · 社企加速',
     text: '围绕社区服务、民生需求和影响力投资，推动社会企业在真实场景里验证服务与商业模式。',
     banners: [
-      { src: 'assets/project-banners/2022-2023/phase-2022-2023-01.jpg', title: '2022-2023 上海沙龙合照' },
-      { src: 'assets/project-banners/2022-2023/phase-2022-2023-02.jpg', title: '社会企业助力计划第二期合照' },
+      { src: '/assets/project-banners/2022-2023/phase-2022-2023-01.jpg', title: '2022-2023 上海沙龙合照' },
+      { src: '/assets/project-banners/2022-2023/phase-2022-2023-02.jpg', title: '社会企业助力计划第二期合照' },
     ],
   },
   {
@@ -110,8 +110,8 @@ const journeyItems = [
     data: '女性社创 · 路演训练 · 议题表达',
     text: '专门支持女性社会创业者，把商业可持续、议题表达和组织成长放在同一张发展图谱里。',
     banners: [
-      { src: 'assets/project-banners/2023-2024/phase-2023-2024-01.jpg', title: '她山之力第二期合影' },
-      { src: 'assets/project-banners/2023-2024/phase-2023-2024-02.jpg', title: '青年女性赋能工作坊合照' },
+      { src: '/assets/project-banners/2023-2024/phase-2023-2024-01.jpg', title: '她山之力第二期合影' },
+      { src: '/assets/project-banners/2023-2024/phase-2023-2024-02.jpg', title: '青年女性赋能工作坊合照' },
     ],
   },
   {
@@ -124,9 +124,9 @@ const journeyItems = [
     data: '205申请 · 97赋能 · 16资助 · 152家数据库',
     text: '在更宽的议题赛道中筛选和陪伴社会企业，形成从训练营、决赛到长期社群的支持闭环。',
     banners: [
-      { src: 'assets/project-banners/2025-2026/phase-2025-2026-01.jpg', title: '2025 创业者社群合照' },
-      { src: 'assets/project-banners/2025-2026/phase-2025-2026-02.jpg', title: '2025 社会企业助力计划资助仪式' },
-      { src: 'assets/project-banners/2025-2026/phase-2025-2026-03.jpg', title: '2025 共创工作坊合照' },
+      { src: '/assets/project-banners/2025-2026/phase-2025-2026-01.jpg', title: '2025 创业者社群合照' },
+      { src: '/assets/project-banners/2025-2026/phase-2025-2026-02.jpg', title: '2025 社会企业助力计划资助仪式' },
+      { src: '/assets/project-banners/2025-2026/phase-2025-2026-03.jpg', title: '2025 共创工作坊合照' },
     ],
   },
 ];
@@ -166,13 +166,47 @@ const reports = [
     title: '渣打-恩派社会企业助力计划实践与洞察报告',
     period: '2025-2026',
     description: '聚焦 2025-2026 社会企业助力计划的实践过程、项目数据、社企画像与洞察总结。',
-    url: 'assets/reports/insight-report-2025-2026.pdf',
+    url: '/assets/reports/insight-report-2025-2026.pdf',
+    highlights: [
+      '样本覆盖 152 家社会企业，集中于残障融合、教育公平、社区发展治理、银发服务、生态环保、心理健康、青年发展等民生领域。',
+      '样本覆盖全国 14 个省市、21 个城市，76.3% 集中在中心城市，23.7% 分布于三四线城市及县域地区。',
+      '95% 的样本机构处于 0-1 验证期或 1-10 模式建立期，核心问题是从“项目能做”走向“组织能稳”。',
+    ],
+    findings: [
+      '早期社会企业并不缺少议题意识，真正稀缺的是机构能力。',
+      '收入结构单一、抗风险能力较弱，是本期样本最突出的共性挑战之一。',
+      '服务高度依赖创始人，经验尚未转化为组织可承接、可复制的流程。',
+      '产品与真实使用场景之间仍存在脱节，需求真实不等于场景成立。',
+      '更有效的支持不是培训更多，而是更贴近机构真实经营过程。',
+    ],
+    suggestions: [
+      '支持设计应更关注机构所处阶段，而不是假定所有社会企业需要同一种支持。',
+      '资助重点可适度从“支持项目执行”转向“支持能力资产化”。',
+      '支持生态网络需要更主动地把 AI 和数字工具纳入社会创业基础设施。',
+      '从“培训项目”走向“实践共同体”，可能是更有效的长期支持形态。',
+    ],
   },
   {
     title: '渣打-恩派社会企业助力计划实践与观察报告',
     period: '2024',
     description: '整理 2024 年项目实践观察，呈现社会企业支持过程中的经验、问题与阶段性发现。',
-    url: 'assets/reports/insight-report-2024.pdf',
+    url: '/assets/reports/insight-report-2024.pdf',
+    highlights: [
+      '报告回顾渣打与恩派围绕社会企业助力计划的项目实践，关注社会企业可持续经营能力提升。',
+      '到 2023 年底，项目已为超过 700 家社会企业提供能力建设培训，并向其中 40 家社会企业提供 400 万元资金支持。',
+      '调研显示，社会企业需求集中在资金支持、行业交流、人才招募、小型私董会、专家一对一咨询等方面。',
+    ],
+    findings: [
+      '社会企业可持续发展问题较为凸显，资金短缺、品牌影响力不足、产品迭代能力不强、销售渠道单一是常见问题。',
+      '项目通过种子基金、赋能培训和社群活动，为社会企业提供资源链接、专业赋能和社群支持。',
+      '社会企业需要重塑认知，明确多重属性与发展优势，并提升商业市场中的竞争能力。',
+      '影响力投资主体需要通过平台建设、投资者教育、金融工具创新等方式支持社会企业发展。',
+    ],
+    suggestions: [
+      '面向社会企业本身，应优化运营模式、撬动社会资本、善用政策资源。',
+      '面向影响力投资主体，应吸引更多资本投入社会企业，促进商业和社会的可持续发展。',
+      '面向支持性公益组织，应尊重社会企业发展规律，科学赋能，并帮助其深耕社会议题。',
+    ],
   },
 ];
 
@@ -445,16 +479,24 @@ const postersPage = () => `<div class="page">
 </div>`;
 
 const reportsPage = () => `<div class="page">
-  ${pageHero('INSIGHT REPORTS', '洞察报告', '项目实践与观察资料入口', '这里集中收录渣打-恩派社会企业助力计划的实践与洞察报告，可在线打开或下载保存。')}
+  ${pageHero('INSIGHT REPORTS', '洞察报告', '项目实践与观察资料入口', '这里直接整理展示渣打-恩派社会企业助力计划实践与洞察报告的核心内容。')}
   <section class="report-shell">
     <div class="report-grid">
       ${reports.map((report) => `<article class="report-card">
         <span class="pill accent">${escapeHtml(report.period)}</span>
         <h3>${escapeHtml(report.title)}</h3>
         <p>${escapeHtml(report.description)}</p>
-        <div class="report-actions">
-          <a class="button primary" href="${escapeHtml(report.url)}" target="_blank" rel="noopener noreferrer">打开报告</a>
-          <a class="button" href="${escapeHtml(report.url)}" download>下载 PDF</a>
+        <div class="report-section">
+          <h4>报告摘要</h4>
+          <ul>${report.highlights.map((item) => `<li>${escapeHtml(item)}</li>`).join('')}</ul>
+        </div>
+        <div class="report-section">
+          <h4>关键发现</h4>
+          <ul>${report.findings.map((item) => `<li>${escapeHtml(item)}</li>`).join('')}</ul>
+        </div>
+        <div class="report-section">
+          <h4>支持建议</h4>
+          <ul>${report.suggestions.map((item) => `<li>${escapeHtml(item)}</li>`).join('')}</ul>
         </div>
       </article>`).join('')}
     </div>

@@ -445,13 +445,12 @@ button { cursor: pointer; }
 }
 .report-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 22px;
+  grid-template-columns: 1fr;
+  gap: 24px;
 }
 .report-card {
   display: flex;
   flex-direction: column;
-  min-height: 330px;
   padding: 34px;
   background: #fff;
   border: 1px solid rgba(20, 60, 43, .08);
@@ -468,12 +467,24 @@ button { cursor: pointer; }
   color: var(--muted);
   line-height: 1.85;
 }
-.report-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin-top: auto;
-  padding-top: 28px;
+.report-section {
+  margin-top: 24px;
+  padding-top: 22px;
+  border-top: 1px solid var(--line);
+}
+.report-section h4 {
+  margin: 0 0 12px;
+  color: var(--green-dark);
+  font-size: 18px;
+}
+.report-section ul {
+  margin: 0;
+  padding-left: 20px;
+  color: var(--muted);
+  line-height: 1.85;
+}
+.report-section li + li {
+  margin-top: 8px;
 }
 .project-detail-shell {
   width: min(1040px, 92vw);
@@ -869,7 +880,7 @@ button { cursor: pointer; }
   .hero { grid-template-columns: 1fr; min-height: auto; padding-top: 70px; }
   .hero-visual { min-height: 390px; margin-top: 20px; }
   .stats, .feature-cards, .grantee-grid { grid-template-columns: 1fr; }
-  .impact-strip, .timeline, .dashboard-grid, .story-grid, .ecosystem-grid, .poster-grid, .report-grid { grid-template-columns: repeat(2, 1fr); }
+  .impact-strip, .timeline, .dashboard-grid, .story-grid, .ecosystem-grid, .poster-grid { grid-template-columns: repeat(2, 1fr); }
   .timeline::before { display: none; }
   .insight-grid, .method-grid { grid-template-columns: 1fr; }
   .project-intro-card { grid-template-columns: 1fr; }
