@@ -82,8 +82,8 @@ const journeyItems = [
     data: '疫后纾困 · 种子基金 · 能力建设',
     text: '从疫情影响下的经营恢复出发，帮助社会企业获得资金、课程和传播支持，稳住组织基本盘。',
     banners: [
-      { src: '/assets/project-banners/2021/phase-2021-01.jpg', title: '2021 上海沙龙合照' },
-      { src: '/assets/project-banners/2021/phase-2021-02.jpg', title: '2021 深圳沙龙合照' },
+      { src: 'assets/project-banners/2021/phase-2021-01.jpg', title: '2021 上海沙龙合照' },
+      { src: 'assets/project-banners/2021/phase-2021-02.jpg', title: '2021 深圳沙龙合照' },
     ],
   },
   {
@@ -96,8 +96,8 @@ const journeyItems = [
     data: '社区场景 · 民生议题 · 社企加速',
     text: '围绕社区服务、民生需求和影响力投资，推动社会企业在真实场景里验证服务与商业模式。',
     banners: [
-      { src: '/assets/project-banners/2022-2023/phase-2022-2023-01.jpg', title: '2022-2023 上海沙龙合照' },
-      { src: '/assets/project-banners/2022-2023/phase-2022-2023-02.jpg', title: '社会企业助力计划第二期合照' },
+      { src: 'assets/project-banners/2022-2023/phase-2022-2023-01.jpg', title: '2022-2023 上海沙龙合照' },
+      { src: 'assets/project-banners/2022-2023/phase-2022-2023-02.jpg', title: '社会企业助力计划第二期合照' },
     ],
   },
   {
@@ -110,8 +110,8 @@ const journeyItems = [
     data: '女性社创 · 路演训练 · 议题表达',
     text: '专门支持女性社会创业者，把商业可持续、议题表达和组织成长放在同一张发展图谱里。',
     banners: [
-      { src: '/assets/project-banners/2023-2024/phase-2023-2024-01.jpg', title: '她山之力第二期合影' },
-      { src: '/assets/project-banners/2023-2024/phase-2023-2024-02.jpg', title: '青年女性赋能工作坊合照' },
+      { src: 'assets/project-banners/2023-2024/phase-2023-2024-01.jpg', title: '她山之力第二期合影' },
+      { src: 'assets/project-banners/2023-2024/phase-2023-2024-02.jpg', title: '青年女性赋能工作坊合照' },
     ],
   },
   {
@@ -124,9 +124,9 @@ const journeyItems = [
     data: '205申请 · 97赋能 · 16资助 · 152家数据库',
     text: '在更宽的议题赛道中筛选和陪伴社会企业，形成从训练营、决赛到长期社群的支持闭环。',
     banners: [
-      { src: '/assets/project-banners/2025-2026/phase-2025-2026-01.jpg', title: '2025 创业者社群合照' },
-      { src: '/assets/project-banners/2025-2026/phase-2025-2026-02.jpg', title: '2025 社会企业助力计划资助仪式' },
-      { src: '/assets/project-banners/2025-2026/phase-2025-2026-03.jpg', title: '2025 共创工作坊合照' },
+      { src: 'assets/project-banners/2025-2026/phase-2025-2026-01.jpg', title: '2025 创业者社群合照' },
+      { src: 'assets/project-banners/2025-2026/phase-2025-2026-02.jpg', title: '2025 社会企业助力计划资助仪式' },
+      { src: 'assets/project-banners/2025-2026/phase-2025-2026-03.jpg', title: '2025 共创工作坊合照' },
     ],
   },
 ];
@@ -166,13 +166,13 @@ const reports = [
     title: '渣打-恩派社会企业助力计划实践与洞察报告',
     period: '2025-2026',
     description: '聚焦 2025-2026 社会企业助力计划的实践过程、项目数据、社企画像与洞察总结。',
-    url: '/assets/reports/insight-report-2025-2026.pdf',
+    url: 'assets/reports/insight-report-2025-2026.pdf',
   },
   {
     title: '渣打-恩派社会企业助力计划实践与观察报告',
     period: '2024',
     description: '整理 2024 年项目实践观察，呈现社会企业支持过程中的经验、问题与阶段性发现。',
-    url: '/assets/reports/insight-report-2024.pdf',
+    url: 'assets/reports/insight-report-2024.pdf',
   },
 ];
 
